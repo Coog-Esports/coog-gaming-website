@@ -11,17 +11,9 @@ import {
 
 import { useEventDialogStore } from "@/lib/store";
 
-import EventForm, {
-  type EventAdminOption,
-} from "./event-form";
+import EventForm from "./event-form";
 
-interface EventDialogProps {
-  admins: EventAdminOption[];
-}
-
-export default function EventDialog({
-  admins,
-}: EventDialogProps) {
+export default function EventDialog() {
   const {
     open,
     mode,
@@ -73,7 +65,6 @@ export default function EventDialog({
               initialDate={
                 selectedStartDate
               }
-              admins={admins}
               onSuccess={handleSuccess}
               onCancel={closeDialog}
             />
@@ -86,7 +77,6 @@ export default function EventDialog({
             <EventForm
               mode="edit"
               event={selectedEvent}
-              admins={admins}
               onSuccess={handleSuccess}
               onCancel={closeDialog}
             />

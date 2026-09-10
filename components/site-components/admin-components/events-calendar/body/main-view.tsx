@@ -7,18 +7,11 @@ import WeekView from "./week-view";
 import type { Event } from "@/db/schema/events";
 import EventDialog from "../event-dialog";
 
-export interface EventAdminOption {
-  id: string;
-  firstName: string | null;
-  lastName: string | null;
-}
-
 interface MainViewProps{
   events: Event[]
-  admins: EventAdminOption[]
 }
 
-export default function MainView({events, admins}: MainViewProps) {
+export default function MainView({events}: MainViewProps) {
   const { selectedView } = useViewStore();
   return (
     <div className="flex">
@@ -26,7 +19,7 @@ export default function MainView({events, admins}: MainViewProps) {
         {selectedView === "month" && <MonthView events={events}/>}
         {selectedView === "week" && <WeekView events={events}/>}
         {selectedView === "day" && <DayView events={events}/>}
-        <EventDialog admins={admins} />
+        <EventDialog />
       </div>
     </div>
   );
