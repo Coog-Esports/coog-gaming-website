@@ -7,7 +7,7 @@ export default async function Page() {
   return (
     <main className="min-h-screen bg-black/25 bg-[url('/uh-site-background.png')] bg-cover bg-center bg-fixed bg-no-repeat bg-blend-multiply px-4 py-12 font-sans font-bold text-white sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-[1600px] space-y-8">
-        <header className="rounded-xl border border-red-500/30 bg-gradient-to-br from-gray-950/95 via-red-950/95 to-gray-900/90 px-6 py-8 text-center shadow-xl backdrop-blur-lg sm:px-10">
+        <header className="rounded-xl border border-red-500/30 bg-gradient-to-br from-gray-950/95 via-red-950/95 to-gray-900/90 px-6 py-8 text-center shadow-xl backdrop-blur-lg sm:px-10" data-testid="teams-header">
           <p className="text-sm font-bold uppercase tracking-[0.24em] text-red-300">
             Coog Gaming Rosters
           </p>
