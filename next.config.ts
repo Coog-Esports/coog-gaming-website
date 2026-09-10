@@ -6,9 +6,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb",
     },
   },
-  turbopack: {
-    root: "/Users/murtazahusain/Documents/Github/coog-gaming-website-main",
-  },
+  
   images: {
     remotePatterns: [
       {
