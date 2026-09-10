@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserPlus } from "lucide-react";
 import { toast } from "sonner";
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import { Input } from "@/components/ui/input";
 import { addTeamMember } from "@/server/team-members";
 
 import type {
@@ -26,51 +26,79 @@ type AddTeamMemberProps = {
   members: DashboardMember[];
 };
 
+function memberLabel(member: DashboardMember) {
+  const name = [
+    member.user.firstName,
+    member.user.lastName,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return [
+    name,
+    member.user.gamerName && `"${member.user.gamerName}"`,
+  ]
+    .filter(Boolean)
+    .join(" ") || "Unnamed Member";
+}
+
 export default function AddTeamMember({
   team,
   members,
 }: AddTeamMemberProps) {
   const router = useRouter();
 
-  const [dialogOpen, setDialogOpen] =
-    useState(false);
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [selectedMember, setSelectedMember] =
+    useState<DashboardMember | null>(null);
+  const [adding, setAdding] = useState(false);
 
-  const [selectedMemberId, setSelectedMemberId] =
-    useState("");
-
-  const [adding, setAdding] =
-    useState(false);
-
-  // ==========================================
-  // AVAILABLE MEMBERS
-  // ==========================================
-
-  // members = every member in the organization
-  // team.members = members already on this team
   const availableMembers = members.filter(
     (member) =>
       !team.members.some(
-        (teamMember) =>
-          teamMember.id === member.id,
+        (teamMember) => teamMember.id === member.id,
       ),
   );
 
-  // ==========================================
-  // ADD MEMBER
-  // ==========================================
+  const matchingMembers = availableMembers.filter((member) =>
+    memberLabel(member)
+      .toLowerCase()
+      .includes(debouncedSearch),
+  );
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setDebouncedSearch(search.trim().toLowerCase());
+    }, 250);
+
+    return () => window.clearTimeout(timer);
+  }, [search]);
+
+  function reset() {
+    setSearch("");
+    setDebouncedSearch("");
+    setSelectedMember(null);
+  }
+
+  function handleOpenChange(nextOpen: boolean) {
+    setOpen(nextOpen);
+
+    if (!nextOpen) {
+      reset();
+    }
+  }
 
   async function handleAddMember() {
-    if (!selectedMemberId) {
-      toast.error("Please select a member");
-      return;
-    }
+    if (!selectedMember) return;
 
     setAdding(true);
 
     try {
       const { error } = await addTeamMember({
         teamId: team.id,
-        memberId: selectedMemberId,
+        memberId: selectedMember.id,
       });
 
       if (error) {
@@ -79,10 +107,8 @@ export default function AddTeamMember({
       }
 
       toast.success("Member added to team");
-
-      setSelectedMemberId("");
-      setDialogOpen(false);
-
+      reset();
+      setOpen(false);
       router.refresh();
     } catch {
       toast.error("Failed to add member");
@@ -91,138 +117,80 @@ export default function AddTeamMember({
     }
   }
 
-  // ==========================================
-  // DIALOG CHANGE
-  // ==========================================
-
-  function handleOpenChange(open: boolean) {
-    setDialogOpen(open);
-
-    if (!open) {
-      setSelectedMemberId("");
-    }
-  }
-
   return (
     <>
-      {/* Add Member Button */}
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setDialogOpen(true)}
+        onClick={() => setOpen(true)}
         aria-label={`Add member to ${team.name}`}
       >
         <UserPlus className="h-4 w-4" />
       </Button>
 
-      {/* Add Member Dialog */}
-      <Dialog
-        open={dialogOpen}
-        onOpenChange={handleOpenChange}
-      >
+      <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              Add Member
+              {selectedMember ? "Add Team Member" : "Select Member"}
             </DialogTitle>
 
             <DialogDescription>
-              Add a member to {team.name}.
+              {selectedMember
+                ? `Add ${memberLabel(selectedMember)} to ${team.name}.`
+                : `Select a member to add to ${team.name}.`}
             </DialogDescription>
           </DialogHeader>
 
-          {availableMembers.length > 0 ? (
-            <div className="space-y-4">
-              {/* Member Selection */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">
-                  Member
-                </label>
+          {availableMembers.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              All available members are already on this team.
+            </p>
+          ) : selectedMember ? (
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setSelectedMember(null)}
+                disabled={adding}
+              >
+                Back
+              </Button>
 
-                <select
-                  value={selectedMemberId}
-                  onChange={(e) =>
-                    setSelectedMemberId(
-                      e.target.value,
-                    )
-                  }
-                  disabled={adding}
-                  className="
-                    flex h-10 w-full rounded-md
-                    border border-input
-                    bg-background
-                    px-3 py-2
-                    text-sm
-                    ring-offset-background
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-ring
-                    focus:ring-offset-2
-                    disabled:cursor-not-allowed
-                    disabled:opacity-50
-                  "
-                >
-                  <option value="">
-                    Select a member
-                  </option>
-
-                  {availableMembers.map(
-                    (member) => {
-                      const memberLabel = [
-                        member.user.firstName,
-                        member.user.gamerName
-                          ? `"${member.user.gamerName}"`
-                          : null,
-                        member.user.lastName,
-                      ]
-                        .filter(Boolean)
-                        .join(" ") || "Unnamed Member";
-
-                      return (
-                        <option
-                          key={member.id}
-                          value={member.id}
-                        >
-                          {memberLabel}
-                        </option>
-                      );
-                    },
-                  )}
-                </select>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex justify-end gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() =>
-                    setDialogOpen(false)
-                  }
-                  disabled={adding}
-                >
-                  Cancel
-                </Button>
-
-                <Button
-                  type="button"
-                  onClick={handleAddMember}
-                  disabled={
-                    adding ||
-                    !selectedMemberId
-                  }
-                >
-                  {adding
-                    ? "Adding..."
-                    : "Add Member"}
-                </Button>
-              </div>
+              <Button onClick={handleAddMember} disabled={adding}>
+                {adding ? "Adding..." : "Add Member"}
+              </Button>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">
-              All available members are already
-              on this team.
-            </p>
+            <div className="space-y-2">
+              <Input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search by name or gamer name..."
+                aria-label="Search members"
+              />
+
+              <div className="max-h-60 overflow-y-auto rounded-md border p-1">
+                {matchingMembers.length === 0 ? (
+                  <p className="px-3 py-2 text-sm text-muted-foreground">
+                    No available members found.
+                  </p>
+                ) : (
+                  matchingMembers.map((member) => (
+                    <button
+                      key={member.id}
+                      type="button"
+                      onClick={() => setSelectedMember(member)}
+                      className="
+                        block w-full rounded-sm px-3 py-2 text-left text-sm
+                        hover:bg-accent focus:bg-accent focus:outline-none
+                      "
+                    >
+                      {memberLabel(member)}
+                    </button>
+                  ))
+                )}
+              </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>
