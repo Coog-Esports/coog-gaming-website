@@ -44,10 +44,10 @@ export default async function Page() {
             University of Houston
           </p>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            About COOG Gaming
+            About Coog Gaming
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-200 sm:text-lg">
-            COOG Gaming is the University of Houston&apos;s premier gaming club—a
+            Coog Gaming is the University of Houston&apos;s premier gaming club—a
             home for Cougars who love esports, board games, tabletop games,
             trading card games, and the communities built around them.
           </p>
