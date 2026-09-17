@@ -60,9 +60,7 @@ export default function Footer() {
                 >
                   COOG GAMING
                 </h2>
-                <p className="mt-1.5 flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.28em] text-red-400">
-                  
-                </p>
+                
               </div>
             </div>
 

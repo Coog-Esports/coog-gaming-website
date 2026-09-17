@@ -34,7 +34,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-geo)", "ui-sans-serif", "system-ui", "sans-serif"],
         heading: [
-          "var(--font-zen-dots)",
+          "var(--font-anta)",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",

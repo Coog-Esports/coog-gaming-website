@@ -2,7 +2,7 @@ import "./globals.css";
 
 import Navbar from "@/components/site-components/navbar-components/navbar";
 import Footer from "@/components/site-components/footer";
-import { Geo, Zen_Dots } from "next/font/google";
+import { Geo, Anta} from "next/font/google";
 import { Toaster } from "sonner";
 
 const geo = Geo({
@@ -12,10 +12,10 @@ const geo = Geo({
   display: "swap",
 });
 
-const zenDots = Zen_Dots({
+const anta = Anta({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-zen-dots",
+  variable: "--font-anta",
   display: "swap",
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geo.variable} ${zenDots.variable}`}>
+    <html lang="en" className={`${geo.variable} ${anta.variable}`}>
       <body className="flex min-h-screen flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
