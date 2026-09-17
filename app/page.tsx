@@ -10,7 +10,7 @@ export default async function Page() {
   return (
     <main className="flex min-h-screen flex-col items-center gap-8 bg-black/25 bg-[url('/uh-site-background.png')] bg-cover bg-center bg-fixed bg-no-repeat bg-blend-multiply pb-12 pt-16 md:pb-16">
       <div className="w-[90%] max-w-5xl rounded-xl border border-red-500/30 bg-gradient-to-br from-gray-950/95 via-red-950/95 to-gray-900/90 p-6 text-center font-bold text-white shadow-xl backdrop-blur-lg sm:w-[80%] lg:w-[60%]">
-        <h1 className="text-3xl sm:text-4xl" data-testid="welcome-heading">Welcome to COOG Gaming</h1>
+        <h1 className="text-3xl sm:text-4xl" data-testid="welcome-heading">This is the staging branch</h1>
         <p className="mt-2 text-base text-gray-100">UH premier Gaming Org!</p>
       </div>
 
