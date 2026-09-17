@@ -68,8 +68,7 @@ export function NavbarClient({ account }: NavbarClientProps) {
                 COOG GAMING
               </span>
               <span className="mt-1.5 flex items-center gap-1.5 text-[0.65rem] uppercase tracking-[0.28em] text-red-400">
-                <Gamepad2 className="h-3 w-3" aria-hidden="true" />
-                Cougar powered
+               
               </span>
             </span>
           </span>

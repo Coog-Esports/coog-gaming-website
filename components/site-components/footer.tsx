@@ -61,8 +61,7 @@ export default function Footer() {
                   COOG GAMING
                 </h2>
                 <p className="mt-1.5 flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.28em] text-red-400">
-                  <Gamepad2 className="h-3.5 w-3.5" aria-hidden="true" />
-                  Cougar powered
+                  
                 </p>
               </div>
             </div>
