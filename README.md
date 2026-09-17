@@ -28,16 +28,11 @@ Submit all changes through pull requests and log onto the coog-gaming github acc
    pnpm install
    ```
 
-3. Create a `.env.local` file. There is currently no committed `.env.example`, so obtain values through the project’s approved secure-access process.
+3. Create your own local .env.local file using the example template: 
+  
+  ```cp .env.example .env.local```
+  then just add the required values/keys needed
 
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
-   DATABASE_URL=postgres://...
-   SUPABASE_SERVICE_ROLE_KEY=...
-   ```
-
-   `DATABASE_URL` must be a direct PostgreSQL connection string for Drizzle. It is separate from the Supabase browser/auth connection.
 
 4. Start the development server:
 
