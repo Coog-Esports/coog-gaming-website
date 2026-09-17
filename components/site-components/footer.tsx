@@ -3,9 +3,7 @@ import Link from "next/link";
 import {
   ChevronRight,
   ExternalLink,
-  Gamepad2,
   MapPin,
-  Radio,
 } from "lucide-react";
 
 const communityLinks = [
@@ -20,7 +18,6 @@ const communityLinks = [
   { label: "Twitter", href: "https://x.com/coogesports" },
   { label: "Instagram", href: "https://instagram.com/coogesports" },
   { label: "Twitch", href: "https://twitch.tv/coogesports" },
-  { label: "YouTube", href: "https://youtube.com/@coogesports" },
 ];
 
 export default function Footer() {
