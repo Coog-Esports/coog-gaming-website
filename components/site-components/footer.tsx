@@ -57,7 +57,6 @@ export default function Footer() {
                 >
                   COOG GAMING
                 </h2>
-                
               </div>
             </div>
 
@@ -65,9 +64,6 @@ export default function Footer() {
               The gaming and esports community at the University of Houston.
             </p>
 
-            <div className="mt-6 inline-flex items-center gap-2 rounded-md border border-red-500/20 bg-red-950/40 px-3 py-2 text-xs uppercase tracking-[0.22em] text-white shadow-[inset_0_1px_0_rgba(248,113,113,0.08)]">
-              
-            </div>
           </section>
 
           <section aria-labelledby="community-heading">
