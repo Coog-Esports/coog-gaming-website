@@ -71,11 +71,7 @@ export default function Footer() {
             </p>
 
             <div className="mt-6 inline-flex items-center gap-2 rounded-md border border-red-500/20 bg-red-950/40 px-3 py-2 text-xs uppercase tracking-[0.22em] text-white shadow-[inset_0_1px_0_rgba(248,113,113,0.08)]">
-              <Radio
-                className="h-3.5 w-3.5 animate-pulse text-red-400"
-                aria-hidden="true"
-              />
-              Player hub // Houston, TX
+              
             </div>
           </section>
 
